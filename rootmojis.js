@@ -26,7 +26,6 @@
     }
     WScript.Quit();
 @else @*/
-
 var FreeEmojis = (() => {
 
     'use strict';
@@ -41,56 +40,53 @@ var FreeEmojis = (() => {
         Webpack: () => {
             let webpackExports;
 
-            if(typeof BdApi !== "undefined" && BdApi?.findModuleByProps && BdApi?.findModule) {
+            if (typeof BdApi !== "undefined" && BdApi?.findModuleByProps && BdApi?.findModule) {
                 return { findModule: BdApi.findModule, findModuleByUniqueProperties: (props) => BdApi.findModuleByProps.apply(null, props) };
-            }
-            else if(Discord.window.webpackChunkdiscord_app != null) {
+            } else if (Discord.window.webpackChunkdiscord_app != null) {
                 Discord.window.webpackChunkdiscord_app.push([
                     ['__extra_id__'],
                     {},
                     req => webpackExports = req
                 ]);
-            }
-            else if(Discord.window.webpackJsonp != null) {
-                webpackExports = typeof(Discord.window.webpackJsonp) === 'function' ?
-                Discord.window.webpackJsonp(
-                    [],
-                    { '__extra_id__': (module, _export_, req) => { _export_.default = req } },
-                    [ '__extra_id__' ]
-                ).default :
-                Discord.window.webpackJsonp.push([
-                    [],
-                    { '__extra_id__': (_module_, exports, req) => { _module_.exports = req } },
-                    [ [ '__extra_id__' ] ]
-                ]);
-            }
-            else return null;
-        
+            } else if (Discord.window.webpackJsonp != null) {
+                webpackExports = typeof (Discord.window.webpackJsonp) === 'function' ?
+                    Discord.window.webpackJsonp(
+                        [],
+                        { '__extra_id__': (module, _export_, req) => { _export_.default = req } },
+                        ['__extra_id__']
+                    ).default :
+                    Discord.window.webpackJsonp.push([
+                        [],
+                        { '__extra_id__': (_module_, exports, req) => { _module_.exports = req } },
+                        [['__extra_id__']]
+                    ]);
+            } else return null;
+
             delete webpackExports.m['__extra_id__'];
             delete webpackExports.c['__extra_id__'];
-        
+
             const findModule = (filter) => {
-                for(let i in webpackExports.c) {
-                    if(webpackExports.c.hasOwnProperty(i)) {
+                for (let i in webpackExports.c) {
+                    if (webpackExports.c.hasOwnProperty(i)) {
                         let m = webpackExports.c[i].exports;
-        
-                        if(!m) continue;
-        
-                        if(m.__esModule && m.default) m = m.default;
-        
-                        if(filter(m)) return m;
+
+                        if (!m) continue;
+
+                        if (m.__esModule && m.default) m = m.default;
+
+                        if (filter(m)) return m;
                     }
                 }
-        
+
                 return null;
             };
-    
+
             const findModuleByUniqueProperties = (propNames) => findModule(module => propNames.every(prop => module[prop] !== undefined));
-    
+
             return { findModule, findModuleByUniqueProperties };
         }
     };
-    
+
     var Initialized = false;
     var searchHook;
     var parseHook;
