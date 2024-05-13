@@ -3,6 +3,8 @@
  * @version 1.0.0
  * @description Free emojis and nitro bypass.
  * @author Root :)
+ * @source https://github.com/rootsh3l1/discord_emojis
+ * @updateUrl https://raw.githubusercontent.com/rootsh3l1/discord_emojis/main/rootmojis.js
  */
 
 /*@cc_on
